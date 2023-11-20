@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "//wsl.localhost/Ubuntu/usr/programing/operatingSystem",
-      "program": "//wsl.localhost/Ubuntu/usr/programing/operatingSystem/build/Debug/outDebug",
+      "cwd": "c:/Users/Isaac/OneDrive/Documents/Git/iceOS",
+      "program": "c:/Users/Isaac/OneDrive/Documents/Git/iceOS/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

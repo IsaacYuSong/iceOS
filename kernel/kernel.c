@@ -1,7 +1,11 @@
-#include "stdio.h"
+#include "../headers/stdio.h"
+#include "../headers/keyBoard.h"
+#include "../headers/types.h"
 extern int main() 
 {
-    print("Lasdfadsfadsf");
+    printf(">");
+    string input=readStr();
+    printf(input);
     return 0;  
 }
 

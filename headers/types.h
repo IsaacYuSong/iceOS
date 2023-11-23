@@ -13,6 +13,8 @@ typedef unsigned int uint32;
 typedef signed long long int64;
 typedef unsigned long long uint64;
 
+typedef void* NULL;
+
 typedef char* string; 
 
 #define low_16(address) (uint16)((address) & 0xFFFF)            

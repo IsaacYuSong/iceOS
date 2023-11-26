@@ -1,6 +1,12 @@
 #include "stdio.h"
-void startShell()
+#include "types.h"
+#include "string.h"
+#include "keyBoard.h"
+
+void startShell() 
 {
-    printf("ICEDOS>");
-       
+    char input[256]; 
+
+    readStr(input, sizeof(input));
+    printf(input);
 }

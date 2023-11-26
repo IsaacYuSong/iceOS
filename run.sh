@@ -1,4 +1,3 @@
-
 cd /mnt/c/Users/Isaac/OneDrive/Documents/Git/IceOs
 export PATH=$PATH:/usr/local/i386elfgcc/bin
 nasm "bootsector/boot.asm" -f bin -o "boot.bin"
@@ -14,7 +13,9 @@ i386-elf-ld -o "full_kernel.bin" -Ttext 0x1000 "kernel_entry.o" "kernel.o" --ofo
 cat "boot.bin" "full_kernel.bin" "zeroes.bin" > "OS.bin"
 
 
-qemu-system-x86_64 -drive format=raw,file="OS.bin",index=0,if=floppy -m 128M
+qemu-system-i386 -drive format=raw,file="OS.bin",index=0,if=floppy -m 256M
+
+
 
 
 

@@ -13,66 +13,84 @@ char getc()
         : "=a" (c)
         : "a" (0)
         );
-
-    switch (c)
+    if (c == 0x1C) 
+        return 0;
+    switch (c) 
     {
-    case 0x10: return 'q'; break;
-    case 0x11: return 'w'; break;
-    case 0x12: return 'e'; break;
-    case 0x13: return 'r'; break;
-    case 0x14: return 't'; break;
-    case 0x15: return 'y'; break;
-    case 0x16: return 'u'; break;
-    case 0x17: return 'i'; break;
-    case 0x18: return 'o'; break;
-    case 0x19: return 'p'; break;
-    case 0x1E: return 'a'; break;
-    case 0x1F: return 's'; break;
-    case 0x20: return 'd'; break;
-    case 0x21: return 'f'; break;
-    case 0x22: return 'g'; break;
-    case 0x23: return 'h'; break;
-    case 0x24: return 'j'; break;
-    case 0x25: return 'k'; break;
-    case 0x26: return 'l'; break;
-    case 0x2C: return 'z'; break;
-    case 0x2D: return 'x'; break;
-    case 0x2E: return 'c'; break;
-    case 0x2F: return 'v'; break;
-    case 0x30: return 'b'; break;
-    case 0x31: return 'n'; break;
-    case 0x32: return 'm'; break;
-    case 0x08: return '\b';
+    case 0x10: return 'q';
+    case 0x11: return 'w';
+    case 0x12: return 'e';
+    case 0x13: return 'r';
+    case 0x14: return 't';
+    case 0x15: return 'y';
+    case 0x16: return 'u';
+    case 0x17: return 'i';
+    case 0x18: return 'o';
+    case 0x19: return 'p';
+    case 0x1E: return 'a'; 
+    case 0x1F: return 's'; 
+    case 0x20: return 'd';
+    case 0x21: return 'f';
+    case 0x22: return 'g';
+    case 0x23: return 'h';
+    case 0x24: return 'j';
+    case 0x25: return 'k';
+    case 0x29: return 'z'; 
+    case 0x2C: return 'x'; 
+    case 0x2D: return 'c'; 
+    case 0x2E: return 'v';
+    case 0x2F: return 'b'; 
+    case 0x30: return 'n';
+    case 0x31: return 'm';
+    case 0x0E: return '\b'; 
+    case 0x1C: return '\n'; 
+    case 0x39: return ' ';  
+    default: return 0;
     }
-    return c;
+
 }
 
 string readStr(string buffer, int bufferSize)
 {
     int index = 0;
-    while (1) {
+    int reading=0;
+    while (1) 
+    {
         char input = getc();
-
-        if (input == '\n')
+        // if (!reading) 
+        // {
+        //     reading = 1; 
+        //     continue; 
+        // }
+        if (input == '\n'||input== '\r') 
         {
             printc('\n');
             buffer[index] = '\0';
             return buffer;
+        } 
+        else if(input == '\n' && index == 0)
+        {
+            printc('\n');
         }
-        else if (input == '\b' && index > 0)
+
+        else if (input == '\b' && index > 0) 
         {
             index--;
-            printc('\b');
-            printc(' ');
             buffer[index] = '\0';
-        }
-        else if (input >= ' ' && index < bufferSize - 1) {
+            cursorBack();
+            printc(' '); 
+        }   
+ 
+        else if (input >= ' ' && index < bufferSize - 1) 
+        {
             buffer[index] = input;
             index++;
             printc(input);
+            cursorForward(); 
         }
-    }
 
+
+    }
     return buffer;
 }
 

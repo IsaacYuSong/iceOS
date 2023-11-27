@@ -1,6 +1,5 @@
 #include "types.h"
 #include "stdio.h"
-
 char getc()
 {
     char c;
@@ -75,18 +74,16 @@ string readStr(string buffer, int bufferSize)
 
         else if (input == '\b' && index > 0) 
         {
+            printc(' ');
             index--;
             buffer[index] = '\0';
-            cursorBack();
-            printc(' '); 
-        }   
- 
+            continue;
+        }
         else if (input >= ' ' && index < bufferSize - 1) 
         {
             buffer[index] = input;
             index++;
             printc(input);
-            cursorForward(); 
         }
 
 

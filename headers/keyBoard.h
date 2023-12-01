@@ -34,48 +34,39 @@ char getc()
     case 0x23: return 'h';
     case 0x24: return 'j';
     case 0x25: return 'k';
-    case 0x29: return 'z'; 
-    case 0x2C: return 'x'; 
-    case 0x2D: return 'c'; 
-    case 0x2E: return 'v';
-    case 0x2F: return 'b'; 
-    case 0x30: return 'n';
-    case 0x31: return 'm';
+    case 0x26: return 'l';
+    case 0x2C: return 'z'; 
+    case 0x2D: return 'x'; 
+    case 0x2E: return 'c'; 
+    case 0x2F: return 'v';
+    case 0x31: return 'n';
+    case 0x30: return 'b';
+    case 0x32: return 'm';
     case 0x0E: return '\b'; 
-    case 0x1C: return '\n'; 
-    case 0x39: return ' ';  
+    case 0x35: return '\n'; 
+    case 0x36: return ' ';  
     default: return 0;
     }
-
 }
 
 string readStr(string buffer, int bufferSize)
 {
     int index = 0;
-    int reading=0;
     while (1) 
     {
         char input = getc();
-        // if (!reading) 
-        // {
-        //     reading = 1; 
-        //     continue; 
-        // }
-        if (input == '\n'||input== '\r') 
+        if ((input == '\n' ) && index < bufferSize - 1)
         {
             printc('\n');
-            buffer[index] = '\0';
-            return buffer;
-        } 
-        else if(input == '\n' && index == 0)
-        {
-            printc('\n');
+            buffer[index] = '\0'; 
+            return buffer;  
         }
-
         else if (input == '\b' && index > 0) 
         {
-            printc(' ');
             index--;
+            offset--;
+            printc(' ');
+            offset--;
             buffer[index] = '\0';
             continue;
         }
@@ -90,4 +81,3 @@ string readStr(string buffer, int bufferSize)
     }
     return buffer;
 }
-

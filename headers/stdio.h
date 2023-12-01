@@ -16,6 +16,16 @@ void resetOffset()
     offset=0;
 }
 
+void clearScreen() 
+{
+    uint16* videoMemory = (uint16*)0xB8000;
+    const uint16 clearColor = 0x20 | (0x0F << 8); 
+
+    for (int i = 0; i < 80 * 25; ++i) 
+    {
+        videoMemory[i] = clearColor;
+    }
+}
 
 
 void printf(string str) 
@@ -36,7 +46,6 @@ void *malloc(int nbytes)
 
 
 #endif
-
 
 
 

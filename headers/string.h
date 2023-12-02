@@ -1,27 +1,11 @@
 #include "types.h"
-uint16 strlength(string ch)
-{
-    uint16 i = 0;           
-    while (ch[i++]);
-    return i - 1;               
-}
-
-uint8 strEql(string ch1, string ch2)
-{
-    uint8 result = 1;
-    uint8 size = strlength(ch1);
-
-    if (size != strlength(ch2)) {
-        result = 0;
-    }
-    else {
-        for (uint8 i = 0; i < size; i++) {
-            if (ch1[i] != ch2[i]) {
-                result = 0;
-                break;  
-            }
+int strcmp(const char *str1, const char *str2) {
+    while (*str1 != '\0' && *str2 != '\0') {
+        if (*str1 != *str2) {
+            return (*str1 - *str2);
         }
+        str1++;
+        str2++;
     }
-
-    return result;
+    return 0;
 }

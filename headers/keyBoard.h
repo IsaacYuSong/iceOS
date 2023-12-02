@@ -1,5 +1,7 @@
 #include "types.h"
 #include "stdio.h"
+
+char buffer[256];
 char getc()
 {
     char c;
@@ -12,8 +14,6 @@ char getc()
         : "=a" (c)
         : "a" (0)
         );
-    if (c == 0x1C) 
-        return 0;
     switch (c) 
     {
     case 0x10: return 'q';
@@ -41,26 +41,33 @@ char getc()
     case 0x2F: return 'v';
     case 0x31: return 'n';
     case 0x30: return 'b';
-    case 0x32: return 'm';
-    case 0x0E: return '\b'; 
-    case 0x35: return '\n'; 
-    case 0x36: return ' ';  
+    case 0x32: return 'm'; 
+    case 0x0E: return '\b';
+    case 0x39: return ' '; 
     default: return 0;
     }
 }
 
-string readStr(string buffer, int bufferSize)
+string readStr()
 {
+    int reading=1;
     int index = 0;
-    while (1) 
+    while (reading && index < sizeof(buffer) - 1)
     {
         char input = getc();
-        if ((input == '\n' ) && index < bufferSize - 1)
-        {
-            printc('\n');
-            buffer[index] = '\0'; 
-            return buffer;  
+
+        if (input == 0x1C)
+        {   
+            if (index == 0)
+            {
+                printc('\n');
+            }
+            else
+            {
+                reading = 0;
+            }
         }
+
         else if (input == '\b' && index > 0) 
         {
             index--;
@@ -70,14 +77,20 @@ string readStr(string buffer, int bufferSize)
             buffer[index] = '\0';
             continue;
         }
-        else if (input >= ' ' && index < bufferSize - 1) 
+        else if (input == 0x20)
+        {
+            buffer[index] = ' ';  
+            index++;
+            printc(' ');  
+        }
+
+        else if (input >= ' ' && index < sizeof(buffer) - 1) 
         {
             buffer[index] = input;
             index++;
             printc(input);
         }
-
-
     }
+    buffer[index] = '\0';
     return buffer;
 }

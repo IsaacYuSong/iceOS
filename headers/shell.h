@@ -2,14 +2,11 @@
 #include "types.h"
 #include "string.h"
 #include "keyBoard.h"
-
 void startShell() 
 {
-    char input[256];
+    offset=0;
     printf("IDOS>");
-    readStr(input, sizeof(input));
-    if(strEql(input,"clear"))
-    {
-        clearScreen();
-    }
+    string input =readStr();
+    
 }
+

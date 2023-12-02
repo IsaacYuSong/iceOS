@@ -15,6 +15,3 @@ cat "boot.bin" "full_kernel.bin" "zeroes.bin" > "OS.bin"
 
 qemu-system-i386 -drive format=raw,file="OS.bin",index=0,if=floppy -m 256M
 
-
-
-

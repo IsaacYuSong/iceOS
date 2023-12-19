@@ -1,3 +1,4 @@
+clear
 cd /mnt/c/Users/Isaac/OneDrive/Documents/Git/IceOs
 export PATH=$PATH:/usr/local/i386elfgcc/bin
 nasm "bootsector/boot.asm" -f bin -o "boot.bin"

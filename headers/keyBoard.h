@@ -1,7 +1,6 @@
 #include "types.h"
 #include "stdio.h"
-
-char buffer[256];
+static char buffer[256];
 char getc()
 {
     char c;
@@ -48,26 +47,22 @@ char getc()
     }
 }
 
+
 string readStr()
 {
-    int reading=1;
+    int reading = 1;
     int index = 0;
     while (reading && index < sizeof(buffer) - 1)
     {
         char input = getc();
 
-        if (input == 0x1C)
-        {   
-            if (index == 0)
-            {
-                printc('\n');
-            }
-            else
-            {
-                reading = 0;
-            }
+        if (input == '\n') 
+        {
+            printf("\n");
+            reading = 0;
+            continue;
         }
-
+        
         else if (input == '\b' && index > 0) 
         {
             index--;
@@ -77,13 +72,6 @@ string readStr()
             buffer[index] = '\0';
             continue;
         }
-        else if (input == 0x20)
-        {
-            buffer[index] = ' ';  
-            index++;
-            printc(' ');  
-        }
-
         else if (input >= ' ' && index < sizeof(buffer) - 1) 
         {
             buffer[index] = input;

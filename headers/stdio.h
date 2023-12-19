@@ -1,8 +1,20 @@
 #ifndef STDIO_H
 #define STDIO_H
 #include "types.h"
+
+#define RESET   7
+#define BLACK   30
+#define RED     4
+#define GREEN   2
+#define YELLOW  33
+#define BLUE    1
+#define MAGENTA 5
+#define CYAN    3
+#define ORANGE  6
+
 static int offset = 0;
-void printc(const char c) 
+
+void _printc(const char c,const char colour) 
 {
     volatile char* video_memory = (char*)0xb8000;
     if (c == '\n') 
@@ -11,31 +23,33 @@ void printc(const char c)
     } 
     else 
     {
-        video_memory[offset * 2] = c;
+        int index = offset * 2;
+        video_memory[index] = c;
+        video_memory[index + 1] = colour;
         offset++;
     }
 
 }
 
-
-
-
-void *malloc(int bytes)
+void printc(const char c)
 {
-	char variable[bytes];
-	return &variable;
+    _printc(c, RESET);  
 }
 
 
-void printf(string str) 
+void _printf(string str, const char colour) 
 {
     while (*str != '\0') 
     {
-        printc(*str);
+        _printc(*str,colour);
         str++;
     }
 }
 
+void printf(string str)
+{
+    _printf(str, RESET);  
+}
 
 #endif
 

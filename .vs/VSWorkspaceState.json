@@ -1,8 +1,10 @@
 {
   "ExpandedNodes": [
     "",
+    "\\bootsector",
     "\\headers",
     "\\kernel"
   ],
+  "SelectedNode": "\\run.sh",
   "PreviewInSolutionExplorer": false
 }

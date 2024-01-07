@@ -1,18 +1,19 @@
 #include "types.h"
 #include "stdio.h"
 static char buffer[256];
+
+uint8 inb(uint16 port) 
+{
+    uint8 result;
+    asm volatile("inb %1, %0" : "=a"(result) : "Nd"(port));
+    return result;
+}
+
 char getc()
 {
     char c;
-    asm volatile (
-        "inb $0x64, %0\n"
-        "testb $0x01, %0\n"
-        "jz 1f\n"
-        "inb $0x60, %b1\n"
-        "1:\n"
-        : "=a" (c)
-        : "a" (0)
-        );
+    while ((inb(0x64) & 0x01) == 0);
+    c = inb(0x60);
     switch (c) 
     {
     case 0x10: return 'q';
@@ -43,11 +44,10 @@ char getc()
     case 0x32: return 'm'; 
     case 0x0E: return '\b';
     case 0x39: return ' '; 
+    case 0x1C: return '\n';
     default: return 0;
     }
 }
-
-
 string readStr()
 {
     int reading = 1;
@@ -55,15 +55,7 @@ string readStr()
     while (reading && index < sizeof(buffer) - 1)
     {
         char input = getc();
-
-        if (input == '\n') 
-        {
-            printf("\n");
-            reading = 0;
-            continue;
-        }
-        
-        else if (input == '\b' && index > 0) 
+        if (input == '\b' && index > 0) 
         {
             index--;
             offset--;
@@ -72,6 +64,17 @@ string readStr()
             buffer[index] = '\0';
             continue;
         }
+        // else if (input == '\n' && index <= 0)
+        // {
+        //     printc('\n');
+        //     reading = 0;
+        // }
+        // else if (input == '\n')
+        // {
+        //     buffer[index] = '\0';
+        //     return buffer
+        //     reading = 0;
+        // }
         else if (input >= ' ' && index < sizeof(buffer) - 1) 
         {
             buffer[index] = input;

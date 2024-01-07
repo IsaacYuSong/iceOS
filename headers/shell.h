@@ -2,24 +2,20 @@
 #include "types.h"
 #include "string.h"
 #include "keyBoard.h"
-void runCommand(const string command);
 void startShell() 
 {
-    _printf("IDOS CANADA BC SOUTH SURREY v1.0\n",GREEN);
-    _printf("2023\n",GREEN);
-    _printf("IDOS>",RESET);
+    printf("IDOS>");
+
+
     while(1)
     {
         string input = readStr();
-        runCommand(input);
+        /*if(strcmp(input,"help")==0)
+        {
+            printf("commands:\n");
+            printf("cls - clears screen\n");
+            printf("dir - shows the files and folders in the current directory\n");
+            printf("cd - changes the directory\n");
+        }*/
     }
 }
-void runCommand(const string command)
-{
-    if(strcmp(command,"cls")==0)
-    {
-        
-    }
-}
-
- 
